@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BHIMEJUNG — Shop Food, Fashion, Electronics & More</title>
+<link rel="icon" href="Images/Logo.png">
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+<body>
+
+<header class="top-header">
+  <a href="#" class="brand" id="logo-link">
+    <img src="Images/Logo.png" alt="BHIMEJUNG logo">
+    <span class="brand-name">BHIMEJUNG</span>
+  </a>
+
+  <a href="#" class="deliver-to">
+    <span class="pin">📍</span>
+    <span>Deliver to<br><strong>Nepal</strong></span>
+  </a>
+
+  <form class="search-form" id="search-form">
+    <input type="text" id="search-input" placeholder="Search BHIMEJUNG for products, brands and more" aria-label="Search">
+    <button type="submit" aria-label="Search">🔍</button>
+  </form>
+
+  <div class="header-right">
+    <a href="#" class="header-link">
+      Hello, sign in<br><strong>Account &amp; Lists</strong>
+    </a>
+    <a href="#" class="header-link">
+      Returns<br><strong>&amp; Orders</strong>
+    </a>
+    <button class="cart-btn" id="cart-btn">
+      <span class="cart-icon">🛒</span>
+      <span class="cart-count" id="cart-count">0</span>
+      <span class="cart-label">Cart</span>
+    </button>
+  </div>
+</header>
+
+<nav class="sub-nav">
+  <a href="#" class="all-link">☰ All Categories</a>
+  <a href="#" data-nav-cat="food">Food</a>
+  <a href="#" data-nav-cat="gents">Fashion (Gents)</a>
+  <a href="#" data-nav-cat="ladies">Fashion (Ladies)</a>
+  <a href="#" data-nav-cat="babies">Fashion (Babies)</a>
+  <a href="#" data-nav-cat="electronics">Electronics</a>
+  <a href="#" data-nav-cat="household">Household</a>
+  <a href="#" data-nav-cat="others">Others</a>
+</nav>
+
+<section class="hero" id="brand-home-link">
+  <div class="hero-inner">
+    <div>
+      <h1>Everything you need, delivered from BHIMEJUNG</h1>
+      <p>Food, fashion, electronics and household essentials — 35 products across 7 categories, all in one place. This is a demo storefront with sample data and no real checkout.</p>
+      <div class="hero-badges">
+        <span>🚚 Fast local delivery</span>
+        <span>↩️ Easy returns</span>
+        <span>🔒 Secure checkout (demo)</span>
+      </div>
+    </div>
+    <div class="hero-mark">B</div>
+  </div>
+</section>
+
+<main class="main">
+
+  <div id="home-view">
+    <div id="home-sections"><!-- category rows injected by JS --></div>
+  </div>
+
+  <div id="category-view" class="hidden">
+    <div class="category-view-head">
+      <div>
+        <a href="#" id="back-to-home" class="breadcrumb">&larr; Back to home</a>
+        <h2 id="category-title">Category</h2>
+      </div>
+      <div class="sort-wrap">
+        <label for="sort-select">Sort by:</label>
+        <select id="sort-select">
+          <option value="relevance">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating">Avg. Customer Rating</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-view" id="category-grid"></div>
+  </div>
+
+  <div id="search-results-view" class="hidden"></div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">Back to top</div>
+  <div class="footer-columns">
+    <div>
+      <h4>Get to Know Us</h4>
+      <a href="#">About BHIMEJUNG</a>
+      <a href="#">Careers</a>
+      <a href="#">Press Releases</a>
+    </div>
+    <div>
+      <h4>Connect with Us</h4>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+    </div>
+    <div>
+      <h4>Make Money with Us</h4>
+      <a href="#">Sell on BHIMEJUNG</a>
+      <a href="#">Become an Affiliate</a>
+      <a href="#">Advertise Your Products</a>
+    </div>
+    <div>
+      <h4>Let Us Help You</h4>
+      <a href="#">Your Account</a>
+      <a href="#">Returns Centre</a>
+      <a href="#">Help</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <img src="Images/Logo.png" alt="BHIMEJUNG" style="height:22px;width:22px;border-radius:4px;vertical-align:middle;margin-right:6px;">
+    &copy; 2026 BHIMEJUNG — demo storefront for educational purposes. Not affiliated with Amazon.
+  </div>
+</footer>
+
+<!-- Cart drawer -->
+<div class="cart-overlay hidden" id="cart-overlay"></div>
+<aside class="cart-drawer closed" id="cart-drawer">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <button id="cart-close" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-drawer-body" id="cart-drawer-body"></div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Subtotal</span>
+      <span id="cart-total">Rs. 0</span>
+    </div>
+    <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<!-- =========================================================
+     PRODUCT CATALOGUE
+     Each <div class="product"> below defines one product.
+     To give a product a real photo: drop the image file into
+     Images/products/ using the exact filename in data-img.
+     Until then a coloured placeholder is shown automatically.
+     ========================================================= -->
+<div id="product-data" hidden>
+
+  <!-- ================= FOOD ================= -->
+  <div class="product" data-id="1" data-category="food"
+       data-name="Basmati Rice"
+       data-desc="5 kg bag, long grain, aged"
+       data-price="245" data-original="260" data-discount="6"
+       data-rating="4.2" data-reviews="3374"
+       data-img="Images/basm.png"></div>
+  <div class="product" data-id="2" data-category="food"
+       data-name="Mustard Oil"
+       data-desc="1 L cold-pressed"
+       data-price="1110" data-original="1850" data-discount="40"
+       data-rating="3.7" data-reviews="1582"
+       data-img="Images/must.png"></div>
+  <div class="product" data-id="3" data-category="food"
+       data-name="Red Lentils (Masoor Dal)"
+       data-desc="1 kg pack"
+       data-price="795" data-original="795" data-discount="0"
+       data-rating="4.1" data-reviews="2989"
+       data-img="Images/lent.png"></div>
+  <div class="product" data-id="4" data-category="food"
+       data-name="Green Tea Bags"
+       data-desc="Box of 100"
+       data-price="1715" data-original="1715" data-discount="0"
+       data-rating="4.8" data-reviews="2951"
+       data-img="Images/gree.png"></div>
+  <div class="product" data-id="5" data-category="food"
+       data-name="Himalayan Pink Salt"
+       data-desc="1 kg, fine grain"
+       data-price="1170" data-original="1170" data-discount="0"
+       data-rating="3.4" data-reviews="2411"
+       data-img="Images/pink.png"></div>
+
+  <!-- ================= FASHION (GENTS) ================= -->
+  <div class="product" data-id="6" data-category="gents"
+       data-name="Cotton Formal Shirt"
+       data-desc="Slim fit, full sleeve"
+       data-price="2470" data-original="2470" data-discount="0"
+       data-rating="4.3" data-reviews="4003"
+       data-img="Images/shir.png"></div>
+  <div class="product" data-id="7" data-category="gents"
+       data-name="Slim Fit Jeans"
+       data-desc="Stretch denim"
+       data-price="2590" data-original="3045" data-discount="15"
+       data-rating="3.6" data-reviews="2661"
+       data-img="Images/jeans.png"></div>
+  <div class="product" data-id="8" data-category="gents"
+       data-name="Leather Belt"
+       data-desc="Genuine leather, buckle"
+       data-price="1245" data-original="1245" data-discount="0"
+       data-rating="3.5" data-reviews="4199"
+       data-img="Images/belt.png"></div>
+  <div class="product" data-id="9" data-category="gents"
+       data-name="Casual Sneakers"
+       data-desc="Lightweight sole"
+       data-price="2530" data-original="3420" data-discount="26"
+       data-rating="4.0" data-reviews="248"
+       data-img="Images/sneak.png"></div>
+  <div class="product" data-id="10" data-category="gents"
+       data-name="Wool Blend Blazer"
+       data-desc="Two-button, tailored"
+       data-price="1965" data-original="1965" data-discount="0"
+       data-rating="4.4" data-reviews="2978"
+       data-img="Images/blaz.png"></div>
+
+  <!-- ================= FASHION (LADIES) ================= -->
+  <div class="product" data-id="11" data-category="ladies"
+       data-name="Floral Summer Dress"
+       data-desc="Light cotton, midi"
+       data-price="1445" data-original="1980" data-discount="27"
+       data-rating="3.3" data-reviews="3538"
+       data-img="Images/flor.png"></div>
+  <div class="product" data-id="12" data-category="ladies"
+       data-name="Embroidered Kurti"
+       data-desc="Rayon fabric"
+       data-price="820" data-original="820" data-discount="0"
+       data-rating="3.3" data-reviews="2560"
+       data-img="Images/kurti.png"></div>
+  <div class="product" data-id="13" data-category="ladies"
+       data-name="High-Waist Jeans"
+       data-desc="Skinny fit"
+       data-price="440" data-original="510" data-discount="14"
+       data-rating="4.5" data-reviews="2722"
+       data-img="Images/high.png"></div>
+  <div class="product" data-id="14" data-category="ladies"
+       data-name="Silk Saree"
+       data-desc="Handwoven border"
+       data-price="2340" data-original="2690" data-discount="13"
+       data-rating="4.9" data-reviews="3642"
+       data-img="Images/saree.png"></div>
+  <div class="product" data-id="15" data-category="ladies"
+       data-name="Tote Handbag"
+       data-desc="Vegan leather"
+       data-price="2975" data-original="2975" data-discount="0"
+       data-rating="4.2" data-reviews="3755"
+       data-img="Images/hand.png"></div>
+
+  <!-- ================= FASHION (BABIES) ================= -->
+  <div class="product" data-id="16" data-category="babies"
+       data-name="Baby Onesie Set"
+       data-desc="Pack of 5, cotton"
+       data-price="515" data-original="715" data-discount="28"
+       data-rating="3.4" data-reviews="79"
+       data-img="Images/onei.png"></div>
+  <div class="product" data-id="17" data-category="babies"
+       data-name="Cotton Rompers"
+       data-desc="Snap closure"
+       data-price="1405" data-original="1405" data-discount="0"
+       data-rating="4.2" data-reviews="2300"
+       data-img="Images/romp.png"></div>
+  <div class="product" data-id="18" data-category="babies"
+       data-name="Baby Sun Hat"
+       data-desc="Wide brim, breathable"
+       data-price="1075" data-original="1075" data-discount="0"
+       data-rating="4.4" data-reviews="3578"
+       data-img="Images/sunhat.png"></div>
+  <div class="product" data-id="19" data-category="babies"
+       data-name="Soft Baby Booties"
+       data-desc="Anti-slip"
+       data-price="345" data-original="485" data-discount="29"
+       data-rating="4.1" data-reviews="2934"
+       data-img="Images/boot.png"></div>
+  <div class="product" data-id="20" data-category="babies"
+       data-name="Baby Sleeping Bag"
+       data-desc="Fleece, wearable"
+       data-price="1430" data-original="1430" data-discount="0"
+       data-rating="4.8" data-reviews="1387"
+       data-img="Images/sleep.png"></div>
+
+  <!-- ================= ELECTRONICS ================= -->
+  <div class="product" data-id="21" data-category="electronics"
+       data-name="Smartphone 128GB"
+       data-desc="6.5&quot; display, dual SIM"
+       data-price="86510" data-original="93020" data-discount="7"
+       data-rating="3.3" data-reviews="3031"
+       data-img="Images/phone.png"></div>
+  <div class="product" data-id="22" data-category="electronics"
+       data-name="Wireless Earbuds"
+       data-desc="Noise isolating"
+       data-price="25585" data-original="31980" data-discount="20"
+       data-rating="4.3" data-reviews="1955"
+       data-img="Images/buds.png"></div>
+  <div class="product" data-id="23" data-category="electronics"
+       data-name="4K Smart TV 43&quot;"
+       data-desc="HDR, built-in apps"
+       data-price="138160" data-original="179430" data-discount="23"
+       data-rating="5.0" data-reviews="476"
+       data-img="Images/tv.png"></div>
+  <div class="product" data-id="24" data-category="electronics"
+       data-name="Laptop 15.6&quot;"
+       data-desc="8GB RAM, 512GB SSD"
+       data-price="104000" data-original="157575" data-discount="34"
+       data-rating="3.8" data-reviews="3451"
+       data-img="Images/laptop.png"></div>
+  <div class="product" data-id="25" data-category="electronics"
+       data-name="Bluetooth Speaker"
+       data-desc="Portable, waterproof"
+       data-price="32810" data-original="36455" data-discount="10"
+       data-rating="3.6" data-reviews="3218"
+       data-img="Images/speak.png"></div>
+
+  <!-- ================= HOUSEHOLD ================= -->
+  <div class="product" data-id="26" data-category="household"
+       data-name="Non-Stick Cookware Set"
+       data-desc="5-piece set"
+       data-price="1935" data-original="1935" data-discount="0"
+       data-rating="4.5" data-reviews="3448"
+       data-img="Images/stick.png"></div>
+  <div class="product" data-id="27" data-category="household"
+       data-name="Bed Sheet Set (Queen)"
+       data-desc="Cotton, 4-piece"
+       data-price="2725" data-original="3170" data-discount="14"
+       data-rating="4.4" data-reviews="2994"
+       data-img="Images/sheet.png"></div>
+  <div class="product" data-id="28" data-category="household"
+       data-name="Vacuum Cleaner"
+       data-desc="Bagless, 1200W"
+       data-price="1500" data-original="1500" data-discount="0"
+       data-rating="4.2" data-reviews="949"
+       data-img="Images/vacc.png"></div>
+  <div class="product" data-id="29" data-category="household"
+       data-name="Storage Organizer Box"
+       data-desc="Stackable, set of 3"
+       data-price="450" data-original="555" data-discount="19"
+       data-rating="3.8" data-reviews="2315"
+       data-img="Images/box.png"></div>
+  <div class="product" data-id="30" data-category="household"
+       data-name="Kitchen Knife Set"
+       data-desc="6-piece with block"
+       data-price="3840" data-original="4130" data-discount="7"
+       data-rating="3.9" data-reviews="3161"
+       data-img="Images/knife.png"></div>
+
+  <!-- ================= OTHERS ================= -->
+  <div class="product" data-id="31" data-category="others"
+       data-name="Yoga Mat"
+       data-desc="6mm, non-slip"
+       data-price="1225" data-original="1225" data-discount="0"
+       data-rating="3.6" data-reviews="2626"
+       data-img="Images/yoga.png"></div>
+  <div class="product" data-id="32" data-category="others"
+       data-name="Football"
+       data-desc="Size 5, match grade"
+       data-price="2130" data-original="3130" data-discount="32"
+       data-rating="4.7" data-reviews="1834"
+       data-img="Images/ball.png"></div>
+  <div class="product" data-id="33" data-category="others"
+       data-name="Car Phone Mount"
+       data-desc="Dashboard clip"
+       data-price="2920" data-original="3355" data-discount="13"
+       data-rating="4.2" data-reviews="906"
+       data-img="Images/mount.png"></div>
+  <div class="product" data-id="34" data-category="others"
+       data-name="Gardening Tool Set"
+       data-desc="5-piece with bag"
+       data-price="4510" data-original="4510" data-discount="0"
+       data-rating="4.5" data-reviews="2109"
+       data-img="Images/tool.png"></div>
+  <div class="product" data-id="35" data-category="others"
+       data-name="Pet Dog Leash"
+       data-desc="Reflective, adjustable"
+       data-price="4905" data-original="4905" data-discount="0"
+       data-rating="3.6" data-reviews="4057"
+       data-img="Images/dog.png"></div>
+</div>
+
+
+</body>
+</html>
